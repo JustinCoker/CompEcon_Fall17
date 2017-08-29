@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{harvard}
+\usepackage[hidelinks]{hyperref}
+\citationmode{abbr}
+\citationstyle{dcu}
+\pagestyle{fancy}
+\lhead{Justin Coker | Problem Set 1}
+\rhead{}
+\begin{document}
+
+\section{Purpose}
+
+The purpose of this essay is to describe my research interests and make note of a few existing works that are most relevant.
+
+\section{General Interests}
+
+In general, my interests lie and the intersection of the Labor/Education, Public, and Urban economics subfields. I have chosen to focus this essay on the application(s) of spatial econometrics to these subfields as this has recently become an area of great interest to me.
+
+I will first outline some key theoretical works in the area of spatial econometrics. Then, I will make reference to recent applied works that most closely resemble my own research interests. Finally, I will conclude by describing research ideas that I am currently pursuing.
+
+\section{Spatial Econometrics}
+
+In attempting to review major works in the field of spatial econometrics, \citeasnoun{Anselin2010} is an invaluable resource. In this literature review, the history of the field is chronicled with great detail. Anselin posits that \citeasnoun{paelinck1979spatial} was the first attempt at defining a distinct methodology for spatial econometric analysis.
+
+However, the field has evolved greatly since 1979 and the two most relevant (comprehensive) theoretical guides today seem to be \citeasnoun{lesage1999} and \citeasnoun{lesage2008}. In surveying these works, I find that a (paraphrased) definition for the field is: The econometric methods used to study the spatial aspects of data. In general, spatial econometrics is most concerned with the issues that arise when variables such as distance and location are important to the data generating process.
+
+In the spirit of using latex to typeset complicated equations, I will partially reproduce \possessivecite{lesage2008} derivation of the spatial autoregressive process.
+
+Consider a dataset in which we have observations over N regions which lie along a roadway (i.e. each region borders no more than 2 other regions). If we believe that the spatial relationship between the regions does not matter, suppressing error term assumptions we have:
+
+\begin{equation}
+y_i = X_i\beta + \epsilon_i,\ \ \ i=1, ...\ ,N
+\end{equation}
+
+as our model where $X_i$ is the vector of explanatory variables, $y_i$ in the dependent variable and $\epsilon_i$ represents the error term per usual notational convention.
+
+\newpage
+
+However, if we believe that outcomes at location $i$ are impacted by its two neighbors $j$ and $k$, we must model the situation as a system of equations:
+
+\begin{equation}
+y_i = \alpha_{i,j}y_j + \alpha_{i,k}y_k + X_i\beta + \epsilon_i
+\end{equation}
+\begin{equation}
+y_j = \alpha_{j,i}y_i + \alpha_{j,k}y_k + X_j\beta + \epsilon_j
+\end{equation}
+\begin{equation}
+y_k = \alpha_{k,i}y_i + \alpha_{k,j}y_j + X_k\beta + \epsilon_k
+\end{equation}
+
+which is clearly unsolvable since we have $N^2-N$ parameters with only N equations.
+
+To solve this issue, we generate a spatial weighting matrix, W:
+
+$$
+\begin{pmatrix}
+
+0 & 1 & 0 & \cdots & 0 & 0 & 0\\ \frac{1}{2} & 0 & \frac{1}{2} & 0 & 0 & 0 & 0\\ 0 & \frac{1}{2} & 0 & \frac{1}{2} & 0 & 0 & 0\\ \vdots &  &  & \ddots &  &  & \vdots\\ 0 & 0 & 0 & \frac{1}{2} & 0 & \frac{1}{2} & 0 \\ 0 & 0 & 0 & 0 & \frac{1}{2} & 0 & \frac{1}{2} \\ 0 & 0 & 0 & \cdots & 0 & 1 & 0
+\end{pmatrix}
+$$
+
+and write our model
+
+\begin{equation}
+y= \rho Wy+\epsilon
+\end{equation}
+
+where y is an (N x 1) vector such that our spatial weighting matrix assigns spatial relations by picking up a weighted average (here 50\%) of the 2 neighbors for regions 2 through (N-1). Here, regions 1 and N (which only have 1 neighbor represented) are only spatially related to regions 2 and (N-1), respectively as indicated by the 1 in the (1,2) and (N, N-1) elements of the (N x N) matrix, W.
+
+\section{Applied Works}
+
+In this section, I will detail recent works which apply spatial econometric methods to my subfields of interest. I will emphasize spatial models of crime and housing/property values.\\
+
+
+The literature related to the spatial analysis of crime is mainly concerned with explaining how certain characteristics of an area\footnote{In general, ``area" can mean a space as small as an individual property or as large as an entire city.} impact crime. The spatial component is usually necessary because crime in a given area is likely to be impacted by crime in a nearby area.
+
+
+Due to the fact that crime could be endogenous with many other economic variables, most studies employ a novel identification  method or instrument to seek out causality.
+
+For example, \citeasnoun{Aliprantis2015} use the demolition of public housing to identify local effects on crime. They find that reductions in crime in the immediate vicinity of the demolished housing project are offset by increases in crime in neighboring areas, explained by the entrance of displaced residents into nearby neighborhoods.
+
+Similarly, \citeasnoun{Ellen2013} explore the impact of foreclosures on crime in New York City using a difference in difference design. They find that more foreclosure activity is associated with higher crime rates on the city block. This is explained by the fact that areas with more foreclosure have more resident turnover and reduced monitoring and maintenance, which lead to more crime.
+
+A final example of spatial analysis of crime is \citeasnoun{Twinam2017}, which uses a novel instrument in exploring the impact of land use on crime. The instrument used is an old (1923) zoning designation as an instrument for current land use in order to avoid endogeneity. The final conclusion being that commercial land use leads to more street crime as compared to mixed use or residential areas.\\
+
+In the area of housing prices, \citeasnoun{Glaeser2009} use a spatial design to estimate the impact of land use regulations on property values. They find some evidence that land use controls raise prices (presumably through restricting supply), but these results do not hold up to more rigorous robustness tests.
+
+\citeasnoun{Andreyeva2017} use ``priority attendance zones" of charter schools in Georgia to estimate how education choice is capitalized into the housing markets. Their novel design uses carefully defined ``border areas" in a difference-in-difference design.
+
+\section{Research Ideas}
+In this concluding section, I hope to list and briefly describe (in broad strokes) some of my own research ideas in these fields. 
+
+\begin{itemize}
+\item Using spatial crime data from Washington D.C. from \url{crimemap.dc.gov} and business license registry (geocoded) from \url{opendata.dc.gov}, I could estimate how different land uses contribute to crime on the immediate area. Instrumentation would be necessary to prevent confounding factors.
+
+\item In the Urban Economics literature dealing with crime, there is a general assumption that population density is a huge driver of crime. I propose using a novel instrument (here game times of Washington Nationals baseball games) as an exogenous shock to population density in the area immediately surrounding the stadium. Combining this with the data noted above could be used to study the pure impact of population density on crime. 
+
+\item Using spatial property data from the State of Florida (freely available) combined with school attendance zones from \url{nces.ed.gov}. I propose using this data to study how school districts respond to changes in neighboring counties, building on \citeasnoun{Ihlanfeldt2014} and \citeasnoun{Ihlanfeldt2011}\end{itemize}
+
+\newpage
+\bibliographystyle{dcu}
+\bibliography{biblio}
+\end{document}

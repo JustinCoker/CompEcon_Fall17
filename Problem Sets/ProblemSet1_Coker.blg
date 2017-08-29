@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ProblemSet1_Coker.aux
+The style file: dcu.bst
+Database file #1: biblio.bib
+Warning--there's a number but no volume in lesage2008
+You've used 11 entries,
+            2921 wiz_defined-function locations,
+            717 strings with 6536 characters,
+and the built_in function-call counts, 36076 in all, are:
+= -- 5832
+> -- 425
+< -- 1
++ -- 2670
+- -- 126
+* -- 3036
+:= -- 7426
+add.period$ -- 22
+call.type$ -- 11
+change.case$ -- 153
+chr.to.int$ -- 11
+cite$ -- 12
+duplicate$ -- 155
+empty$ -- 346
+format.name$ -- 169
+if$ -- 6440
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 12
+newline$ -- 51
+num.names$ -- 111
+pop$ -- 28
+preamble$ -- 1
+purify$ -- 165
+quote$ -- 0
+skip$ -- 136
+stack$ -- 0
+substring$ -- 8111
+swap$ -- 21
+text.length$ -- 155
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 42
+warning$ -- 1
+while$ -- 250
+width$ -- 0
+write$ -- 152
+(There was 1 warning)
