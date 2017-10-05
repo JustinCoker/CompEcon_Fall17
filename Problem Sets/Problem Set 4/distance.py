@@ -19,10 +19,6 @@ def dist(df, latlon1, latlon2):
         print('lat, long columns in DataFrame are not of equal lengths')
 
 
-testdist = dist(actual_2008, ['buyer_lat', 'buyer_long'],
-                             ['target_lat', 'target_long'])
-
-
 dfs = [actual_2007, actual_2008, counter_fact]
 
 latlon1 = ['buyer_lat', 'buyer_long']
@@ -31,3 +27,7 @@ latlon2 = ['target_lat', 'target_long']
 
 for el in dfs:
     el['distance'] = dist(el, latlon1, latlon2)
+
+end = time.time()
+
+print(end - start)
