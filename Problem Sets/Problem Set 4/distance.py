@@ -27,7 +27,3 @@ latlon2 = ['target_lat', 'target_long']
 
 for el in dfs:
     el['distance'] = dist(el, latlon1, latlon2)
-
-end = time.time()
-
-print(end - start)
