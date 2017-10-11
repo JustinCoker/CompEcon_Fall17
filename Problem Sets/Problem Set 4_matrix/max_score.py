@@ -4,19 +4,24 @@ from scipy.optimize import differential_evolution
 
 
 def score_func(B):
-    #score = 0
 
     alpha, beta = B
 
     cf2007, cf2008, act2007, act2008 = payoff_mat(alpha, beta)
 
-    '''for m in [[act2007, cf2007], [act2008, cf2008]]:
+    '''
+    score = 0
+
+    for m in [[act2007, cf2007], [act2008, cf2008]]:
         n = len(m[0])
         for i in range(n):
             for j in range(n):
                 if j > i:
                     if (m[0][i] + m[0][j] >= m[1][j, i] + m[1][i, (j - 1)]):
-                        score = score + 1'''
+                        score = score + 1
+
+    return score * -1
+    '''
 
     score = [1 for m in [[act2007, cf2007], [act2008, cf2008]]
              for i in range(len(m[0]))
@@ -25,21 +30,17 @@ def score_func(B):
     return sum(score) * -1
 
 
-# score = score_func()
-'''
-B = np.array((.5, .5))
+B = np.array((300, -2))
 
-coefs = opt.minimize(score_func, B, method='Nelder-Mead',
-                     tol=1e-10, options={'maxiter': 5000})
+result_NM = opt.minimize(score_func, B, method='Nelder-Mead')
 
-coefs = opt.minimize.differential_evolution()
-'''
+bounds = [(0, 400), (-5, 5)]
 
-bounds = [(-100000, 100000), (-100000, 100000)]
+result_DE = differential_evolution(score_func, bounds)
 
-result = differential_evolution(score_func, bounds)
+print(result_NM)
 
-print(result)
+print(result_DE)
 
 end = time.time()
 
