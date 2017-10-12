@@ -11,3 +11,5 @@ exec(open("./distance.py").read())
 exec(open("./payoff_func.py").read())
 
 exec(open("./max_score.py").read())
+
+exec(open("./optimization.py").read())

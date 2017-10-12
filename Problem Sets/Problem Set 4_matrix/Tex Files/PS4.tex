@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{harvard}
+\usepackage[hidelinks]{hyperref}
+\citationmode{abbr}
+\citationstyle{dcu}
+\pagestyle{fancy}
+\lhead{Justin Coker | Problem Set 4}
+\rhead{}
+\begin{document}
+Estimating the following model:
+
+$$f(b, t) = Corp * Pop + \alpha Stations * Pop + \beta Dist  + \epsilon$$
+
+To examine the impact of corporate ownership and distance on radio station mergers.
+
+Following Akkus, Cookson, and Horta\c csu (2016) using the maximum score estimator:
+
+$$\beta = \text{argmax} Q(\beta) = \sum_{y=1}^{2} \sum_{b = 1}^{M_y -1}\sum_{b^\prime = b+1}^{M_y} 1[f(b, t|\beta) + f(b^\prime, t^\prime|\beta) \geq f(b^\prime, t|\beta) + f(b, t^\prime|\beta)]$$
+
+To do so, I create a two payoff matrices one for actual matches and counter-factual matches.
+
+
+
+\end{document}
