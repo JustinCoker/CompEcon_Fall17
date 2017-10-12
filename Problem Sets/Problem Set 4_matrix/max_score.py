@@ -4,7 +4,18 @@ from scipy.optimize import differential_evolution
 
 
 def score_func(B, transfers):
+    '''
+    This function defines the maximum score of the model specification
 
+    input:
+        B: coefficients of the model to be estimated, these will ultimately be
+           passed to payoff_mat() and subsequently payoff_func() for
+           caclulation of the payoff matrices.
+
+        transfers: "T" or "F" depending on the specification
+    '''
+
+    
     if transfers == "F":
         alpha, beta = B
 
