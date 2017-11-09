@@ -1,0 +1,41 @@
+Capital Accumulation by Firm
+
+objective: max discounted PV of profits
+
+max_{k_{t+1}, I_t, l_t|_0^\infty} sum_{0^\infty} Mult_{0^t} (\frac{1}{1+r_t})[\pi(z_t, k_t, l_t) - p_t^k * I_t]
+
+where p_t^k is price of capital goods, I_t is gross investment
+
+z_t is productivity, K_t is capital, l_t is labor, \pi is profit fn
+
+discounting by r_t
+
+I_t = k_{t+1}-(1-\delta)k_t
+
+\delta= rate of depreciation
+
+Law of motion for captial
+
+k_{t+1} = (1-\delta)k_t + I_t
+
+so choice of K_{t+1} pins down I_t and reverse
+
+key note: k_{t+1} is chosen at time t, but productive at t+1
+
+\pi() = R(z,k,l) - wl
+
+R() = p*q(z,k,l) or q(z,k,l) if normalize price to 1
+
+q() = zk^{\alpha_k}l^{\alpha_l}
+
+l_t does not depend on l_{t-1}, but is chosen independently each period; not an intertemperal choice.
+
+t,f, we can write \pi(z,k) = max_l \pi(z,k,l)
+i.e. profit is a function of z, k when l is chosen optimally given known value of z_t, k_t since k_t is known at period t, was chosen at t-1.
+
+policy function:
+l(z, k) = argmax_l \pi(z, k, l)
+
+
+
+
