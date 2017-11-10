@@ -1,12 +1,18 @@
 def main():
 
+    '''
+    The function imports eurostat R&D expenditure by NUTS 2 regions using the
+    eurostat API combined with pyjstat (for dealing with the json file).
+
+    This function reshapes the data into panel form and returns panel, a df.
+    '''
     import pandas as pd
     from pyjstat import pyjstat
 
     eurostat = "http://ec.europa.eu/eurostat/wdds/rest/data/v2.1/json/en/"
     rdURL1 = ("rd_e_gerdreg?precision=2&sectperf=TOTAL&sinceTimePeriod=1986&unit="
-          "EUR_HAB&filterNonGeo=1&shortLabel=1&geoLevel=nuts2&grouped"
-          "Indicators=1&unitLabel=code")
+              "EUR_HAB&filterNonGeo=1&shortLabel=1&geoLevel=nuts2&grouped"
+              "Indicators=1&unitLabel=code")
 
     url = eurostat + rdURL1
 
