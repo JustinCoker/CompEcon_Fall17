@@ -52,6 +52,6 @@ def main():
 
     # set a value of TRUE if a region borders a country which joined the EU in '04
 
-    panel['neighbor_joined'] = [any([el in N for el in eurojoin_04])
+    panel['neighbor_joined'] = [any([el in N and el[0:2] != N[0:2] for el in eurojoin_04])
                                 for N in list(panel.NEIGHBORS)]
     return panel

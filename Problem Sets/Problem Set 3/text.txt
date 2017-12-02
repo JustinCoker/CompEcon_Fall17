@@ -1,0 +1,10 @@
+A major threat to identification is the fact that we cannot be sure that teachers observe a student's previous test performance.
+However, the teacher's expected score is recorded at the end of the school year (around the time the test is administered).
+Therefore, a teacher may not directly internalize the ``shock" created by a lower achievement level. It could be argued, however,
+that if the student internalizes this shock and this changes their behavior throughout the school year, it may be reconciled
+into the teacher's expectations.
+
+An additional threat to identification is that the shock may be internalized by students and not teachers. In this case, the affect
+we will record is the fall (or rise) in performance with expectations held constant. Since we cannot distinguish between
+the performance affect and the expectation effect, we are unable to be sure which effect is being observed.
+

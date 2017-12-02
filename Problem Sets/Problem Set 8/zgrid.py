@@ -1,0 +1,51 @@
+def main(params):
+
+    import numpy as np
+    from scipy.stats import norm
+    import scipy.integrate as integrate
+    import numba
+    import time
+
+    ak, al, delta, psi, wage, r, betaf, sigma, mu, rho, sizez = params
+
+    # Creating zgrid as done in class. Credit: J Debacker
+    # Compute cut-off values
+    sigmaz = sigma / ((1 - rho ** 2) ** (1 / 2))
+    N = 9  # number of grid points
+    z_cutoffs = (sigmaz * norm.ppf(np.arange(N + 1) / N)) + mu
+
+    z_grid = ((N * sigmaz * (norm.pdf((z_cutoffs[:-1] - mu) / sigmaz) -
+              norm.pdf((z_cutoffs[1:] - mu) / sigmaz))) + mu)
+
+    # define function that we will integrate over
+    def integrand(x, sigmaz, sigma, rho, mu, z_j, z_jp1):
+        val = (np.exp((-1 * ((x - mu) ** 2)) / (2 * (sigmaz ** 2))) *
+               (norm.cdf((z_jp1 - (mu * (1 - rho)) - (rho * x)) / sigma) -
+                norm.cdf((z_j - (mu * (1 - rho)) - (rho * x)) / sigma)))
+
+        return val
+
+    # compute transition probabilities
+    pi = np.empty((N, N))
+    for i in range(N):
+        for j in range(N):
+            results = integrate.quad(integrand, z_cutoffs[i], z_cutoffs[i + 1],
+                                     args=(sigmaz, sigma, rho, mu,
+                                           z_cutoffs[j], z_cutoffs[j + 1]))
+            pi[i, j] = (N / np.sqrt(2 * np.pi * sigmaz ** 2)) * results[0]
+
+    # transform since the shock given is in logs:
+
+    z_grid = [np.exp(x) for x in z_grid]
+
+    '''
+    Returns vector of expected z' for each z
+    '''
+    expz = np.zeros(sizez)
+    for j in range(sizez):
+        for i in range(sizez):
+            expz[j] += pi[j][i] * z_grid[i]
+
+    '''z_grid = [1 for i in range(len(z_grid))]
+    expz = [1 for i in range(len(z_grid))]'''
+    return z_grid, pi, expz
