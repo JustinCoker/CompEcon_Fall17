@@ -1,4 +1,13 @@
-def main(params, z_grid, expz, kgrid, sizek, sizez, E, E_expz):
+def main(w, eq_params, z_grid, kgrid, sizek, E, pi):
+
+    '''
+    This function takes the wage and parameters and runs the value function
+    iteration routine to convergence.
+
+    The function returns the value function and loc objects.
+
+    loc object determines the policy function from the kgrid.
+    '''
 
     import numpy as np
     from scipy.stats import norm
@@ -6,54 +15,49 @@ def main(params, z_grid, expz, kgrid, sizek, sizez, E, E_expz):
     import numba
     import time
 
-    ak, al, delta, psi, wage, r, betaf, sigma, mu, rho, sizez = params
+    wage = w
 
-    CV = [np.zeros(sizek) for el in range(sizez)]
-    Vnext = [np.zeros(sizek) for el in range(sizez)]
-    Vnew = [np.zeros(sizek) for el in range(sizez)]
-    VAL = [np.zeros((sizek, sizek)) for el in range(sizez)]
-    loc = [np.zeros(sizek) for i in range(sizez)]
-    tol = 5e-5
-    maxiter = 300
-    iter = 1
-    dist = 1
+    # unpack params
+    ak, al, delta, psi, r, betaf, sigma, mu, rho, sizez, h = eq_params
+
+    CV = np.zeros((sizez, sizek))  # guess i.e. V0
+
+    # initialize matrix that will hold value for every combo of z, k, k'
+    VAL = np.zeros((sizez, sizek, sizek))
+    
+    tol = 1e-6  # tolerance
+    maxiter = 400  # maximum iterations
+    iter = 1  # initialize iter counter
+    dist = 5  # initialize dist for use in the VFI
+
 
     @numba.jit
-    def valf_it(CV):
-        for q in range(len(z_grid)):
-            for i in range(len(kgrid)):
-                for j in range(len(kgrid)):
-                    VAL[q][i,j] = E[q][i,j] +  betaf * CV[q][j]
+    def valf_it(VAL, CV, sizez, sizek, E, pi):
+
+        '''
+        given the current value function, this function will return
+        the VAL matrix cotaining the expected valueVAL
+        conditional on z of all possible combinations of z, k, k'
+        '''
+        CondV = np.dot(pi, CV)
+
+        for q in range(sizez):
+            for i in range(sizek):
+                for j in range(sizek):
+                    VAL[q, i, j] = E[q, i, j] + betaf * CondV[q, j]
 
         return VAL
 
-    #@numba.jit
-    def NewV(VAL):
-        for q in range(len(VAL)):
-            Vnew[q] = VAL[q].max(axis = 1)
-            loc[q] = np.argmax(VAL[q], axis = 1)
-
-        return Vnew, loc
-
-    @numba.jit
-    def nextV(CV, E_expz, loc):
-        for q in range(len(z_grid)):
-            for i in range(len(loc[q])):
-                l = int(loc[q][i])
-                Vnext[q][i] = E_expz[q][i, l]+ betaf * CV[q][l]
-
-        return Vnext
 
 
     start_time = time.clock()
     while dist > tol and iter < maxiter:
-        VAL = valf_it(CV)
-        Vnew, loc = NewV(VAL)
-        dist = np.absolute((Vnew[0] - CV[0]).max())
+        VAL = valf_it(VAL, CV, sizez, sizek, E, pi)  # gets VAL matrix
+        Vnext = VAL.max(axis=2)  # val fn guess for next iteration
+        loc = np.argmax(VAL, axis=2)  # stores index of optimal choice
+        dist = (np.absolute(Vnext - CV)).max()
         iter += 1
-        Vnext = nextV(CV, E_expz, loc)
         CV = Vnext
-        print(iter, dist)
 
     if iter < maxiter:
         result = 'Successful Convergence'
@@ -63,4 +67,4 @@ def main(params, z_grid, expz, kgrid, sizek, sizez, E, E_expz):
 
     time = time.clock() - start_time
 
-    return Vnew, loc, result, time
+    return Vnext, loc, result, time, iter

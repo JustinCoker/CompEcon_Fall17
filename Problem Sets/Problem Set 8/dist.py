@@ -1,7 +1,12 @@
 def main(kgrid, sizez, sizek, pi, loc):
+    '''
+    This function takes k and z grids and transition matrix along with policy
+    function from VFI to determine the stationary distribution for a given
+    partial equilibrium
+
+    '''
 
     import numpy as np
-
 
     # finding stationary distribution as in class Credit: J Debacker
 
@@ -16,8 +21,8 @@ def main(kgrid, sizez, sizek, pi, loc):
         for i in range(sizez):  # z
             for j in range(sizek):  # k
                 for m in range(sizez):  # z'
-                    HGamma[m, loc[i][j]] = \
-                        HGamma[m, loc[i][j]] + pi[i, m] * Gamma[i, j]
+                    HGamma[m, loc[i, j]] = \
+                        HGamma[m, loc[i, j]] + pi[i, m] * Gamma[i, j]
         SDdist = (np.absolute(HGamma - Gamma)).max()
         Gamma = HGamma
         SDiter += 1

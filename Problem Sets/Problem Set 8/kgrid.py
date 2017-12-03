@@ -1,5 +1,8 @@
 def main(params):
 
+    '''
+    Calculates and returns the grid of k values
+    '''
     import numpy as np
     from scipy.stats import norm
     import scipy.integrate as integrate
@@ -8,9 +11,12 @@ def main(params):
 
     ak, al, delta, psi, wage, r, betaf, sigma, mu, rho, sizez = params
     # creating kgrid as done in class. Credit: J Debacker
-    dens = 15
+    dens = 5
     # put in bounds here for the capital stock space
-    kstar = 1000
+    # put in bounds here for the capital stock space
+    kstar = ((((1 / betaf - 1 + delta) * ((wage / al) ** (al / (1 - al)))) /
+             (ak * (1 ** (1 / (1 - al))))) **
+             ((1 - al) / (ak + al - 1)))
 
 
 
@@ -26,5 +32,4 @@ def main(params):
     kgrid = K[::-1]
     sizek = kgrid.shape[0]
 
-    sizek = kgrid.shape[0]
     return kgrid, sizek

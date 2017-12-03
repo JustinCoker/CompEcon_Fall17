@@ -1,5 +1,8 @@
 def main(params):
 
+    '''
+    Calculates and returns the grid of z values
+    '''
     import numpy as np
     from scipy.stats import norm
     import scipy.integrate as integrate
@@ -38,14 +41,5 @@ def main(params):
 
     z_grid = [np.exp(x) for x in z_grid]
 
-    '''
-    Returns vector of expected z' for each z
-    '''
-    expz = np.zeros(sizez)
-    for j in range(sizez):
-        for i in range(sizez):
-            expz[j] += pi[j][i] * z_grid[i]
 
-    '''z_grid = [1 for i in range(len(z_grid))]
-    expz = [1 for i in range(len(z_grid))]'''
-    return z_grid, pi, expz
+    return z_grid, pi
