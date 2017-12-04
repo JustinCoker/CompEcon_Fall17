@@ -1,4 +1,6 @@
 def main(w, params, z_grid, kgrid, sizek):
+    import numba
+
     '''
     This function takes wage, parameters and returns the per period profit
     for matrix (profit for each combination of z, k, k')
@@ -15,6 +17,7 @@ def main(w, params, z_grid, kgrid, sizek):
     ak, al, delta, psi, r, betaf, sigma, mu, rho, sizez, h = params
 
     # returns the firm operating profit for a given z and k
+    @numba.jit
     def firmprofit(z, k):
         p = ((1-al)*(al/wage)**(al/(1-al))*
             z**(1/(1-al))*
@@ -23,12 +26,14 @@ def main(w, params, z_grid, kgrid, sizek):
         return p
 
     # returns the adjustment costs for a given k and k'
+    @numba.jit
     def adjcost(k, k1):
         c = (psi/2) * ((k1 - (1-delta) * k) / k) ** 2 * k
 
         return c
 
     # returns the per period earnings for a given z, k, k'
+    @numba.jit
     def earnings(z, k, k1):
         p = firmprofit(z, k)  # Operating profit
         c = adjcost(k, k1)  # adjustment costs
@@ -42,10 +47,14 @@ def main(w, params, z_grid, kgrid, sizek):
 
 
     # creates "per period earnings" matrix for all possible values of z and k, k'
+    @numba.jit
+    def Epp():
+        for z in range(sizez):
+            for k in range(sizek):
+                for k1 in range(sizek):
+                    E[z, k, k1] = earnings(z_grid[z], kgrid[k], kgrid[k1])
+        return E
 
-    for z in range(sizez):
-        for k in range(sizek):
-            for k1 in range(sizek):
-                E[z, k, k1] = earnings(z_grid[z], kgrid[k], kgrid[k1])
+    E = Epp()
 
     return E

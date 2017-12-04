@@ -11,12 +11,14 @@ def main(params):
 
     ak, al, delta, psi, wage, r, betaf, sigma, mu, rho, sizez = params
     # creating kgrid as done in class. Credit: J Debacker
-    dens = 5
+    dens = 9
     # put in bounds here for the capital stock space
     # put in bounds here for the capital stock space
-    kstar = ((((1 / betaf - 1 + delta) * ((wage / al) ** (al / (1 - al)))) /
+    kstar = 18
+
+    '''((((1 / betaf - 1 + delta) * ((wage / al) ** (al / (1 - al)))) /
              (ak * (1 ** (1 / (1 - al))))) **
-             ((1 - al) / (ak + al - 1)))
+             ((1 - al) / (ak + al - 1)))'''
 
 
 

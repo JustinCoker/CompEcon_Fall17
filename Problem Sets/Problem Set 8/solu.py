@@ -26,9 +26,6 @@ def main(w0, eq_params, sizek, kgrid, z_grid, pi):
     # calls the VFI module, which returns the firm decision rule objects
     Vnext, loc, result, time, iter = VFI.main(wage, eq_params, z_grid, kgrid, sizek, E, pi)
 
-    # prints VFI, dist iteration for diagnostics
-    print('VFI', result, 'after', iter, 'iterations', 'in', time, 'seconds')
-
     # calls the dist module which returns the stationary distribution for a
     # given partial equilibrium
     Gamma = dist.main(kgrid, sizez, sizek, pi, loc)
@@ -70,7 +67,5 @@ def main(w0, eq_params, sizek, kgrid, z_grid, pi):
     LS = h * (1 / (wage * C_agg))  # Aggregate Labor supply
 
     Clearing_Dist = abs(LS - LD)  # distance between supply and demand
-
-    print('LD-LS', Clearing_Dist)
 
     return kopt, Gamma, iopt, ld, adj_cost, y, LD, I, ADJ_cost, Y_agg, C_agg, LS
