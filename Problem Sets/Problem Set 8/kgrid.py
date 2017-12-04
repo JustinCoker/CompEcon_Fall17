@@ -13,13 +13,9 @@ def main(params):
     # creating kgrid as done in class. Credit: J Debacker
     dens = 9
     # put in bounds here for the capital stock space
-    # put in bounds here for the capital stock space
-    kstar = 18
-
-    '''((((1 / betaf - 1 + delta) * ((wage / al) ** (al / (1 - al)))) /
-             (ak * (1 ** (1 / (1 - al))))) **
-             ((1 - al) / (ak + al - 1)))'''
-
+    kstar = 18 # after increasing kstar repeatedly, this gives
+	       # the smallest grid space where the stationary
+	       # distribution doesn't have a mass at the tail.
 
 
     kbar = 2*kstar
