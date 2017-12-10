@@ -3,13 +3,14 @@ def sim_markov(z_grid, pi, num_draws):
     import numpy as np
 
     # draw some random numbers on [0, 1]
+    np.random.seed(seed = 42)
     u = np.random.uniform(size=num_draws)
 
     # Do simulations
     z_discrete = np.empty(num_draws)  # this will be a vector of values
     # we land on in the discretized grid for z
     N = len(z_grid.shape)
-    oldind = int(np.ceil((N - 1) / 2)) # set initial value to median of grid
+    oldind = int(np.ceil((N - 1) / 2))  # set initial value to median of grid
     z_discrete[0] = oldind
     for i in range(1, num_draws):
         sum_p = 0
