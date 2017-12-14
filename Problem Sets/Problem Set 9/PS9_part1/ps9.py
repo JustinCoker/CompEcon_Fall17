@@ -97,7 +97,9 @@ result = opt.minimize(dist, theta, method='nelder-mead', options={'maxiter': 100
 
 x0 = result['x']
 
-std_err = derivative(sim_moments, x0)
+dtheta = derivative(sim_moments, x0)
+
+std_err = dtheta.T * np.eye(5) * dtheta
 
 end = time.clock()
 
